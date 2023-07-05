@@ -1,7 +1,6 @@
-'use client'
-
 import { throttle } from '@/lib/throttle'
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { useSession } from 'next-auth/client'
 import { ChatLine, LoadingChatLine } from './chat-line'
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import cx from 'classnames'
@@ -22,6 +21,7 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
   const [question, setQuestion] = useState(null)
   const [questionError, setQuestionError] = useState(null)
   const inputRef = useRef(null)
+  const [session, loadingSession] = useSession()
 
   const shouldShowLoadingIcon = loading || isGeneratingQuestion
   const inputActive = input !== '' && !shouldShowLoadingIcon
@@ -62,15 +62,21 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-b from-transparent via-white to-white flex flex-col items-center clear-both">
-      <button
-        className="mx-auto flex w-fit items-center gap-3 rounded border border-neutral-200 bg-white py-2 px-4 text-black text-sm hover:opacity-50 disabled:opacity-25"
-        onClick={generateJeopardyQuestion}
-        disabled={isGeneratingQuestion}
-      >
-        <div className="w-4 h-4">
-          <AcademicCapIcon />
-        </div> {'Generate a Jeopardy question for me'}
-      </button>
+      {!loadingSession && session ? (
+        <button
+          className="mx-auto flex w-fit items-center gap-3 rounded border border-neutral-200 bg-white py-2 px-4 text-black text-sm hover:opacity-50 disabled:opacity-25"
+          onClick={generateJeopardyQuestion}
+          disabled={isGeneratingQuestion}
+        >
+          <div className="w-4 h-4">
+            <AcademicCapIcon />
+          </div> {'Generate a Jeopardy question for me'}
+        </button>
+      ) : (
+        <p className="mx-auto flex w-fit items-center gap-3 rounded border border-neutral-200 bg-white py-2 px-4 text-black text-sm">
+          <span className="animate-pulse">Loading...</span>
+        </p>
+      )}
       <div className="mx-2 my-4 flex-1 w-full md:mx-4 md:mb-[52px] lg:max-w-2xl xl:max-w-3xl">
         <div className="relative mx-2 flex-1 flex-col rounded-md border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-4">
           <input
@@ -89,7 +95,7 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
             onChange={(e) => {
               setInput(e.target.value)
             }}
-            disabled={isGeneratingQuestion}
+            disabled={isGeneratingQuestion || !session}
           />
           <button
             className={cx(
@@ -101,7 +107,7 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
               sendMessage(input)
               setInput('')
             }}
-            disabled={shouldShowLoadingIcon}
+            disabled={shouldShowLoadingIcon || !session}
           >
             {shouldShowLoadingIcon
               ? <div className="h-6 w-6 animate-spin rounded-full border-t-2 border-neutral-800 opacity-60 dark:border-neutral-100"></div>
@@ -118,12 +124,17 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
 
 const useMessages = () => {
   const [messages, setMessages] = useState(initialMessages)
-  const [isMessageStreaming, setIsMessageStreaming] = useState(false);
+  const [isMessageStreaming, setIsMessageStreaming] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null)
+  const [session, loadingSession] = useSession()
 
   // send message to API /api/chat endpoint
   const sendMessage = async (newMessage) => {
+    if (!session) {
+      return; // User is not authenticated, do not send the message
+    }
+
     setLoading(true)
     setError(null)
     const newMessages = [
@@ -189,43 +200,44 @@ const useMessages = () => {
   return {
     messages,
     isMessageStreaming,
-    loading,
+    loading: loading || loadingSession,
     error,
     sendMessage,
+    session,
   }
 }
 
 export default function Chat() {
   const [input, setInput] = useState('')
-  const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
-  const messagesEndRef = useRef(null);
-  const chatContainerRef = useRef(null);
-  const { messages, isMessageStreaming, loading, error, sendMessage } = useMessages()
+  const [autoScrollEnabled, setAutoScrollEnabled] = useState(true)
+  const messagesEndRef = useRef(null)
+  const chatContainerRef = useRef(null)
+  const { messages, isMessageStreaming, loading, error, sendMessage, session } = useMessages()
 
   const handleScroll = () => {
     if (chatContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } =
-        chatContainerRef.current;
-      const bottomTolerance = 30;
+        chatContainerRef.current
+      const bottomTolerance = 30
 
       if (scrollTop + clientHeight < scrollHeight - bottomTolerance) {
-        setAutoScrollEnabled(false);
+        setAutoScrollEnabled(false)
       } else {
-        setAutoScrollEnabled(true);
+        setAutoScrollEnabled(true)
       }
     }
-  };
+  }
 
   const scrollDown = useCallback(() => {
     if (autoScrollEnabled) {
       messagesEndRef.current?.scrollIntoView(true)
     }
   }, [autoScrollEnabled])
-  const throttledScrollDown = throttle(scrollDown, 250);
+  const throttledScrollDown = throttle(scrollDown, 250)
 
   useEffect(() => {
     throttledScrollDown()
-  }, [messages, throttledScrollDown]);
+  }, [messages, throttledScrollDown])
 
   useEffect(() => {
     if (error) {
@@ -241,20 +253,23 @@ export default function Chat() {
         onScroll={handleScroll}
       >
         {messages.map(({ content, role }, index) => (
-          <ChatLine key={index} role={role} content={content} isStreaming={index === messages.length - 1 && isMessageStreaming} />
+          <ChatLine
+            key={index}
+            role={role}
+            content={content}
+            isStreaming={index === messages.length - 1 && isMessageStreaming}
+          />
         ))}
 
         {loading && <LoadingChatLine />}
 
-        <div
-          className="h-[152px] bg-white"
-          ref={messagesEndRef}
-        />
+        <div className="h-[152px] bg-white" ref={messagesEndRef} />
         <InputMessage
           input={input}
           setInput={setInput}
           sendMessage={sendMessage}
           isLoading={loading || isMessageStreaming}
+          session={session}
         />
       </div>
       <Toaster />

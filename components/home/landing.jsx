@@ -6,12 +6,13 @@ import useSound from "use-sound";
 
 export default function Landing() {
   const textGradientStyle = {
-    backgroundImage: "linear-gradient(to right, #E5C29F, #B2834E, #825A2C)",
+    backgroundImage: "linear-gradient(to right,#462523 0,#cb9b51 22%,#f6e27a 45%,#f6f2c0 50%,#f6e27a 55%,#cb9b51 78%,#462523 100%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     animationDelay: "0.15s",
     animationFillMode: "forwards"
   };
+  
 
   const [play, { stop }] = useSound("/hp.mp3", { volume: 1 });
 
@@ -43,7 +44,6 @@ export default function Landing() {
           className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0"
           style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
         >
-          
         </div>
       </div>
     </>

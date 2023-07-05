@@ -42,8 +42,8 @@ export default async function RootLayout({
       <Script id="safari-viewport-fix">{IOS_SAFARI_VIEWPORT_UNIT_CORRECTION}</Script>
       <body className={cx(sfPro.variable, inter.variable)}>
       <div
-        className="fixed h-screen w-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url(/stars.png)" }}
+        className="absolute h-screen w-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url(/car.jpg)" }}
       />
 
 

@@ -15,7 +15,7 @@ export default function NavBar({ session }) {
       <SignInModal />
       <div
         className={`fixed top-0 w-full ${scrolled
-          ? "border-b border-gray-200 bg-white/50 backdrop-blur-xl"
+          ? "border-b border-gray-800 bg-black/50 backdrop-blur-xl"
           : "bg-white/0"
           } z-30 transition-all`}
       >
