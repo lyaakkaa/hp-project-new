@@ -3,7 +3,7 @@ import React from 'react';
 const Quiz = () => {
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-cover bg-center wrapper absolute inset-0 overflow-auto bg-gray-800">
-      <div className="p-32 mx-auto flex rounded-lg shadow-xl bg-cover bg-center relative" style={{ backgroundImage: "url('/quiz-bg.jpg')" }}>
+      <div className="w-full h-full p-32 mx-auto flex rounded-lg shadow-xl bg-cover bg-center relative" style={{ backgroundImage: "url('/quiz-bg.jpg')" }}>
         <div className="w-1/2 flex items-center justify-center">
           <div className="w-[320px] h-[320px] rounded-full flex items-center justify-center relative">
             <div className="border-4 border-white border-solid rounded-full absolute w-full h-full animate-spin"></div>

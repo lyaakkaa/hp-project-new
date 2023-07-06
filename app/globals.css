@@ -3,8 +3,18 @@
 @tailwind utilities;
 
 html, body {
-    cursor: url("/curhp.cur");
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    cursor: url(/use160.cur), auto;
 }
+
+.wrapper {
+    background-image: url('/voldemort-and-harry.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
   
 
 #stars {

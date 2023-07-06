@@ -3,7 +3,7 @@ import Card from '../Card';
 
 const menu = () => {
   return (
-    <div className="wrapper absolute inset-0 overflow-auto bg-black">
+    <div className="absolute inset-0 overflow-auto bg-black">
       <div className="absolute inset-0 flex flex-col overflow-hidden">
         <div id="stars"></div>
         <div id="stars2"></div>

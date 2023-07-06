@@ -8,14 +8,6 @@ import Menu from '@/components/home/menu';
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  // useEffect(() => {
-  //   if (session === null && router.path === '/chat') {
-  //     router.push('/')
-  //     return <Landing />;
-  //   }
-  // }, [])
-  
-
   return session !== null ? (
     // <Chat />
     <Menu />
