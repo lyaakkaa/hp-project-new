@@ -11,7 +11,7 @@ const menu = () => {
         <div className="z-10 flex flex-wrap">
           <Card imageUrl="dobby.jpg" title="Create story" link="/chat" />
           <Card imageUrl="trio.jpg" title="My stories" link="/path/to/page2" />
-          <Card imageUrl="hagrid.webp" title="Card 3" link="/path/to/page3" />
+          <Card imageUrl="hagrid.webp" title="Quizes" link="/quiz" />
         </div>
       </div>
     </div>

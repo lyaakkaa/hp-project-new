@@ -9,8 +9,6 @@ import { AcademicCapIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
 
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/authOptions';
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages = [

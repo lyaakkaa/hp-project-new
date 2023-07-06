@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+    cursor: url("/curhp.cur");
+}
+  
+
 #stars {
     width: 1px;
     height: 1px;
@@ -568,6 +573,16 @@
     }
 }
 
-
-
-
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+  
+.animate-spin {
+    animation: spin 2s linear infinite;
+}
+  
