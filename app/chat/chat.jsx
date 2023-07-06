@@ -1,20 +1,18 @@
 'use client'
 
 import { throttle } from '@/lib/throttle'
-import { useState, useRef, useEffect, useCallback } from 'react'
-import { ChatLine, LoadingChatLine } from './chat-line'
-import { PaperAirplaneIcon } from '@heroicons/react/24/outline'
-import cx from 'classnames'
-import { AcademicCapIcon } from '@heroicons/react/24/outline'
+import { AcademicCapIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import axios from 'axios'
+import cx from 'classnames'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-
+import { ChatLine, LoadingChatLine } from './chat-line'
 
 // default first message to display in UI (not necessary to define the prompt)
 export const initialMessages = [
   {
     role: 'assistant',
-    content: 'Hi! I am a Jeopardy expert. Fire away with trivia questions!',
+    content: 'Hi! I am a AI-powered Harry Potter expert that can generate wizarding world stories!✨',
   },
 ]
 
@@ -27,25 +25,7 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
   const shouldShowLoadingIcon = loading || isGeneratingQuestion
   const inputActive = input !== '' && !shouldShowLoadingIcon
 
-  const generateJeopardyQuestion = async () => {
-    setIsGeneratingQuestion(true)
-    setQuestionError(null)
-
-    try {
-      const res = await axios.get('/api/question')
-      if (!res.data) {
-        throw new Error('No question was found in the response.')
-      }
-      const question_data = res.data
-
-      setQuestion(question_data)
-      setInput(`The category is "${question_data.category}". ${question_data.question}`)
-    } catch (err) {
-      setQuestionError(err.message)
-    } finally {
-      setIsGeneratingQuestion(false)
-    }
-  }
+  
 
   useEffect(() => {
     const input = inputRef?.current
@@ -62,16 +42,7 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
   }, [questionError])
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-b from-transparent via-white to-white flex flex-col items-center clear-both">
-      <button
-        className="mx-auto flex w-fit items-center gap-3 rounded border border-neutral-200 bg-white py-2 px-4 text-black text-sm hover:opacity-50 disabled:opacity-25"
-        onClick={generateJeopardyQuestion}
-        disabled={isGeneratingQuestion}
-      >
-        <div className="w-4 h-4">
-          <AcademicCapIcon />
-        </div> {'Generate a Jeopardy question for me'}
-      </button>
+    <div className="bottom-0 left-0 right-0 bg-gradient-to-b from-transparent via-white to-white flex flex-col items-center clear-both">
       <div className="mx-2 my-4 flex-1 w-full md:mx-4 md:mb-[52px] lg:max-w-2xl xl:max-w-3xl">
         <div className="relative mx-2 flex-1 flex-col rounded-md border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-4">
           <input
@@ -235,10 +206,10 @@ export default function Chat() {
   }, [error])
 
   return (
-    <div className="flex-1 w-full border-zinc-100 bg-white overflow-hidden">
+    <div className="flex flex-col flex-1 w-full border-zinc-100 bg-white overflow-hidden y-full">
       <div
         ref={chatContainerRef}
-        className="flex-1 w-full relative max-h-[calc(100vh-4rem)] overflow-x-hidden"
+        className="flex-1 w-full relative max-h-[calc(100vh-4rem)] overflow-x-hidden overflow-y-scroll "
         onScroll={handleScroll}
       >
         {messages.map(({ content, role }, index) => (
@@ -248,16 +219,16 @@ export default function Chat() {
         {loading && <LoadingChatLine />}
 
         <div
-          className="h-[152px] bg-white"
+          className="h-[54vh] bg-white"
           ref={messagesEndRef}
         />
-        <InputMessage
+      </div>
+      <InputMessage
           input={input}
           setInput={setInput}
           sendMessage={sendMessage}
           isLoading={loading || isMessageStreaming}
         />
-      </div>
       <Toaster />
     </div>
   )

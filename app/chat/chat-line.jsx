@@ -54,7 +54,7 @@ export function ChatLine({ role = 'assistant', content, isStreaming }) {
           }
         </div>
 
-        <div className="prose whitespace-pre-wrap flex-1">
+        <div className="prose whitespace-pre-wrap flex-1 text-black">
           {formatteMessage}
         </div>
       </div>

@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/authOptions';
 import Landing from '@/components/home/landing';
 import Chat from './chat';
 import { redirect } from 'next/navigation';
+import StoryGenPage from './StoryGenPage';
 
 
 export default async function page() {
@@ -13,7 +14,8 @@ export default async function page() {
     return (
       <>
         {/* <Chat /> */}
-        <Chat />
+        {/* <Chat /> */}
+        <StoryGenPage />
       </>
     );
     } else {

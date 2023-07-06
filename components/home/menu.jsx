@@ -10,7 +10,7 @@ const menu = () => {
         <div id="stars3"></div>
         <div className="z-10 flex flex-wrap">
           <Card imageUrl="dobby.jpg" title="Create story" link="/chat" />
-          <Card imageUrl="trio.jpg" title="My stories" link="/path/to/page2" />
+          <Card imageUrl="trio.jpg" title="My stories" link="/stories" />
           <Card imageUrl="hagrid.webp" title="Quizes" link="/quiz" />
         </div>
       </div>
