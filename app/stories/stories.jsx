@@ -35,7 +35,7 @@ const Stories = () => {
             <Story
               key={story.title}
               title={story.title}
-              link={story.link}
+              link="stories/1"
               text='asdsdasdasdasdasdasdasdasdasdasdasdasdasd asdasdasdasdas asd'
             />
           ))}

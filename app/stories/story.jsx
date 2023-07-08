@@ -9,9 +9,9 @@ const Story = ({ title, link, text }) => {
         <span className="text-2xl font-bold text-blue-500">{text.charAt(0)}</span>
         {text.slice(1)}
       </p>
-      <a href={link}>
+      <Link href={link}>
         <p className="text-blue-500 font-semibold hover:underline">Read More</p>
-      </a>
+      </Link>
     </div>
   );
 };
