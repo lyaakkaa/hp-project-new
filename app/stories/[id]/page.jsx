@@ -1,18 +1,37 @@
 import React from 'react';
+import axios from 'axios';
 
-const page = () => {
+const fetchStory = async (id) => {
+  try {
+    const response = await axios.get(`http://localhost:8000/stories/${id}`, {
+      headers: {
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGFkODE1OWVkOTgzM2I3MmEyOWJmN2UiLCJleHAiOjE2ODk3NDY0MTJ9.Lq6Cbt76w-SV3_AR5EScb5a5MAcfna6ahE786s-Vcm8',
+      },
+    });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error('Error fetching story: ', error);
+  }
+};
+
+
+const page = async ({params}) => {
+  const { id } = params;
+  let story = null;
+
+  try {
+    story = await fetchStory(id);
+    console.log(story);
+  } catch (error) {
+    console.error('Error fetching story: ', error);
+  }
+
   return (
     <div className="absolute inset-0 bg-black flex justify-center items-start">
       <div className="bg-white fixed w-5/12 h-full flex flex-col justify-start items-start p-8 overflow-auto">
-        <h1 className="text-4xl mb-4 text-center mx-auto">Harry Potter and the Sorcerer's Stone</h1>
-        <p className="">
-        Leila, Akmira, and Amina were three extraordinary witches who had embarked on a remarkable journey together. Leila, with her cascading ebony hair and piercing emerald eyes, possessed a natural talent for potions and an insatiable curiosity for the magical world. Akmira, on the other hand, had an enchanting aura surrounding her, with her flowing golden locks and mesmerizing sapphire eyes. Her innate talent for charms and spells made her a force to be reckoned with. Lastly, Amina, with her fiery red hair and mischievous hazel eyes, was a skilled transfiguration prodigy who could effortlessly transform the most ordinary objects into extraordinary ones. Together, they formed an unbreakable bond, supporting each other through thick and thin. As they embarked on their latest adventure, little did they know that their path would lead them to the hidden depths of the Forbidden Forest, where secrets awaited their discovery and challenges awaited their courage. With their wands at the ready and hearts filled with determination, Leila, Akmira, and Amina were prepared to unravel the mysteries that lay ahead, forging their own destiny amidst the ever-growing magic of the wizarding world.
-        
-        Leila, Akmira, and Amina were three extraordinary witches who had embarked on a remarkable journey together. Leila, with her cascading ebony hair and piercing emerald eyes, possessed a natural talent for potions and an insatiable curiosity for the magical world. Akmira, on the other hand, had an enchanting aura surrounding her, with her flowing golden locks and mesmerizing sapphire eyes. Her innate talent for charms and spells made her a force to be reckoned with. Lastly, Amina, with her fiery red hair and mischievous hazel eyes, was a skilled transfiguration prodigy who could effortlessly transform the most ordinary objects into extraordinary ones. Together, they formed an unbreakable bond, supporting each other through thick and thin. As they embarked on their latest adventure, little did they know that their path would lead them to the hidden depths of the Forbidden Forest, where secrets awaited their discovery and challenges awaited their courage. With their wands at the ready and hearts filled with determination, Leila, Akmira, and Amina were prepared to unravel the mysteries that lay ahead, forging their own destiny amidst the ever-growing magic of the wizarding world.
-
-        Leila, Akmira, and Amina ventured deeper into the heart of the Forbidden Forest, their hearts pounding with anticipation. Their quest to uncover the truth about the mysterious prophecy had led them to a hidden chamber, where they knew the dangerous and powerful dark wizard, Dosmailov, awaited them. As they cautiously entered the room, the air grew thick with tension. Dosmailov, with his sinister sneer and eyes filled with malevolence, stood before them, ready to unleash his dark magic. But our brave trio was not deterred. They remembered the words of the ancient prophecy and knew that their combined strength and unwavering determination would be their greatest weapon. With a flick of their wands, they summoned the secret cat, a creature of immense power and ancient magic. The cat, glowing with a radiant light, lunged at Dosmailov, claws extended and teeth bared. A fierce battle ensued, with spells and curses flying through the air. But Leila, Akmira, and Amina fought with a determination fueled by love, friendship, and the knowledge that the fate of the wizarding world hung in the balance. In a final, climactic showdown, Dosmailov's dark magic was no match for the united strength of our heroines. With a burst of blinding light, Dosmailov was defeated, his power shattered. The wizarding world was saved, but the battle had taken its toll. Leila, Akmira, and Amina stood together, battered but triumphant, their bond stronger than ever. As they caught their breath, they knew that their journey was far from over. The secrets of the prophecy still lingered, and there were new challenges waiting to test their courage. But with their unwavering determination and the power of their shared heritage, they were ready to face whatever lay ahead, their hearts filled with hope and the promise of a brighter future
-
-        Leila, Akmira, and Amina were on a mission to retrieve a crucial piece of evidence from the Ministry of Magic to clear their names and restore their reputations. As they made their way back to Hogwarts, their hearts were heavy with the weight of their recent battle against Dosmailov. Little did they know that an unexpected obstacle awaited them on their path. Just as they reached the edge of the Forbidden Forest, a familiar squeaky voice echoed through the air. It was none other than Dobby, the quirky house-elf who had once been a loyal servant to the Malfoy family. Dobby, with his mismatched eyes and tattered clothing, appeared before them, pleading for their help. He explained that he had overheard a conversation between two high-ranking officials at the Ministry of Magic, revealing a plot to frame Leila, Akmira, and Amina for crimes they didn't commit. Dobby knew that the evidence they sought was in the possession of these officials, but they were heavily guarded. Determined to help their newfound friend, Leila, Akmira, and Amina devised a plan to infiltrate the Ministry of Magic under the cover of darkness. With their skills and wits, they managed to outsmart the guards and retrieve the crucial piece of evidence. With the truth finally in their hands, they presented it to the Wizengamot, clearing their names and exposing the corruption within the Ministry. As the news spread throughout the wizarding world, Leila, Akmira, and Amina were hailed as heroes, their reputations restored. The trio, along with Dobby, formed an unbreakable bond, vowing to continue fighting for justice and protecting the magical community from dark forces. And so, their journey continued, filled with new adventures, friendships, and the unwavering belief in the power of love and courage.
+        <h1 className="text-4xl mb-4 text-center mx-auto">{story.title}</h1>
+        <p className=""> {story.content}
         </p>
       </div>
     </div>

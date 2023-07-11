@@ -1,9 +1,9 @@
 'use client'
-import { useState } from 'react';
 import Story from './story';
 import Link from 'next/link';
-
+import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { useEffect, useRef, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 
 const slides = [
@@ -17,7 +17,33 @@ const slides = [
 ];
 
 const Stories = () => {
+  const [stories, setStories] = useState(null)
+  const didFetchRef = useRef(false)
   const [selectedSlide, setSelectedSlide] = useState(0);
+
+  useEffect(() => {
+    if(didFetchRef.current == false){
+      didFetchRef.current = true
+      fetchStories()
+      print(stories)
+    }
+  }, [stories])
+
+  const fetchStories = async () => {
+    let path = "/"
+    const res = await axios.get("http://localhost:8000/stories/", {
+      method: 'GET',
+      headers: { "accept": "application/json",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGFkODE1OWVkOTgzM2I3MmEyOWJmN2UiLCJleHAiOjE2ODk3NDY0MTJ9.Lq6Cbt76w-SV3_AR5EScb5a5MAcfna6ahE786s-Vcm8"},
+    })
+    const stories_inp = await res.data.stories
+    setStories(stories_inp)
+    console.log("stories:", stories_inp)
+  }
+
+  if (!stories) {
+    return <div>Loading...</div>;
+  }
 
   const handlePreviousSlide = () => {
     setSelectedSlide((prevSlide) => (prevSlide === 0 ? slides.length - 1 : prevSlide - 1));
@@ -31,12 +57,12 @@ const Stories = () => {
     <div className="wrapper absolute inset-0 overflow-hidden">
       <div className="z-10 flex flex-wrap justify-center items-center">
         <Carousel selectedItem={selectedSlide} showArrows={false} showThumbs={false}>
-          {slides.map((story) => (
+          {stories.map((story) => (
             <Story
-              key={story.title}
+              key={story._id}
               title={story.title}
-              link="stories/1"
-              text='asdsdasdasdasdasdasdasdasdasdasdasdasdasd asdasdasdasdas asd'
+              link={`/stories/${story._id}`}
+              text={story.content.substring(0, 50)+'...'}
             />
           ))}
         </Carousel>
