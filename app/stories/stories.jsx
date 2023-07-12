@@ -34,16 +34,13 @@ const Stories = () => {
     const res = await axios.get("http://localhost:8000/stories/", {
       method: 'GET',
       headers: { "accept": "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGFkODE1OWVkOTgzM2I3MmEyOWJmN2UiLCJleHAiOjE2ODk3NDY0MTJ9.Lq6Cbt76w-SV3_AR5EScb5a5MAcfna6ahE786s-Vcm8"},
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGFkODE1OWVkOTgzM2I3MmEyOWJmN2UiLCJleHAiOjE2ODk3OTYxOTl9.GPUtJE7-fZf6T3ugCv0Eo2QQJQE1ZoWyp657A7JepUA"},
     })
     const stories_inp = await res.data.stories
     setStories(stories_inp)
     console.log("stories:", stories_inp)
   }
 
-  if (!stories) {
-    return <div>Loading...</div>;
-  }
 
   const handlePreviousSlide = () => {
     setSelectedSlide((prevSlide) => (prevSlide === 0 ? slides.length - 1 : prevSlide - 1));
@@ -57,7 +54,7 @@ const Stories = () => {
     <div className="wrapper absolute inset-0 overflow-hidden">
       <div className="z-10 flex flex-wrap justify-center items-center">
         <Carousel selectedItem={selectedSlide} showArrows={false} showThumbs={false}>
-          {stories.map((story) => (
+          {stories && stories.map((story) => (
             <Story
               key={story._id}
               title={story.title}

@@ -1,12 +1,14 @@
-import { Dialog, Transition } from '@headlessui/react';
-import axios from "axios";
-import Image from "next/image";
+import { signIn } from "next-auth/react";
 import {
-  Fragment,
+  useState,
   useCallback,
   useMemo,
-  useState
+  Fragment
 } from "react";
+import axios from "axios";
+import { LoadingDots, Google } from "@/components/shared/icons";
+import Image from "next/image";
+import { Dialog, Transition } from '@headlessui/react'
 
 const SignInModal = ({
   showSignInModal,
@@ -43,14 +45,14 @@ const SignInModal = ({
     try {
       const token = await loginUser({"username": userName, "password": password });
       console.log("token:", token);
-      localStorage.setItem("token", token.access_token)
-    
+      localStorage.setItem('token', token.access_token)
+      localStorage.getItem('token')
 
       setToken(token);
   
       if (token) {
+        setSignInClicked(true)
         console.log('Logged in successfully!');
-        window.location.reload()
       } else {
         console.log('Login failed.');
       }
@@ -58,7 +60,6 @@ const SignInModal = ({
       console.log('An error occurred:', error);
     }
   };
-  
 
   return (
     <Transition appear show={showSignInModal} as={Fragment}>
@@ -98,7 +99,7 @@ const SignInModal = ({
                   <h3 className="font-display text-2xl font-bold">Sign In</h3>
                 </div>
 
-                <form onSubmit={(e) => handleSubmit(e)} className="bg-white">
+                <form onSubmit={handleSubmit} className="bg-white">
                   <input
                     type="email"
                     value={userName}
@@ -129,7 +130,7 @@ const SignInModal = ({
 export function useSignInModal() {
   const [showSignInModal, setShowSignInModal] = useState(false);
 
-const SignInModalCallback = useCallback(() => {
+  const SignInModalCallback = useCallback(() => {
     return (
       <SignInModal
         showSignInModal={showSignInModal}

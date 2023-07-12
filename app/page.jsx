@@ -1,17 +1,19 @@
-
+'use client'
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/authOptions';
 import Landing from '@/components/home/landing';
-// import Chat from "@/components/home/chat"
 import Menu from '@/components/home/menu';
+import { useEffect, useState } from 'react';
 
-export default async function Home() {
-  const session = await getServerSession(authOptions);
+export default function Home() {
+  const [hasToken, setHasToken] = useState(false);
 
-  return session !== null ? (
-    // <Chat />
-    <Menu />
-  ) : (
-    <Landing />
-  );
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      setHasToken(Boolean(token));
+    }
+  }, []);
+
+  return hasToken ? <Menu /> : <Landing />;
 }
