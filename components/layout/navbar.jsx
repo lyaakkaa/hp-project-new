@@ -6,7 +6,7 @@ import useScroll from "@/lib/hooks/use-scroll";
 import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 
-export default function NavBar({ session }) {
+export default function NavBar({ hasToken }) {
   const { SignInModal, setShowSignInModal } = useSignInModal();
   const scrolled = useScroll(50);
 
@@ -31,8 +31,8 @@ export default function NavBar({ session }) {
             <p className="text-[32px] text-white">Magic Pen</p>
           </Link>
           <div>
-            {session ? (
-              <UserDropdown session={session} />
+            {hasToken ? (
+              <UserDropdown hasToken={hasToken} />
             ) : (
               <button
                 className="rounded-full border border-white bg-white p-1.5 px-4 text-sm text-black transition-all hover:bg-black hover:text-white"

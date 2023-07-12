@@ -8,10 +8,18 @@ import { Menu, Transition } from '@headlessui/react'
 import { Session } from "next-auth";
 import cx from 'classnames'
 
-export default function UserDropdown({ session }) {
-  const { email, image } = session?.user || {};
+export default function UserDropdown({ hasToken }) {
 
-  if (!email) return null;
+  
+  if (!hasToken) return null;
+
+  const signout = () => {
+    if (typeof window !== 'undefined') {
+      console.log('hheeellooo')
+      localStorage.removeItem('token');
+      window.location.href = "/"
+    }
+  };
 
   return (
     <div className="relative inline-block text-left">
@@ -20,8 +28,8 @@ export default function UserDropdown({ session }) {
           <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
             <span className="sr-only">Open user menu</span>
             <Image
-              alt={email}
-              src={image || `https://avatars.dicebear.com/api/micah/${email}.svg`}
+              alt='avatr'
+              src='/avatar.png'
               width={40}
               height={40}
               className="rounded-full"
@@ -42,7 +50,7 @@ export default function UserDropdown({ session }) {
               {({ active }) => (
                 <button
                   className={cx(active ? 'bg-gray-100' : '', 'relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-sm text-gray-700')}
-                  onClick={() => signOut()}
+                  onClick={() => signout()}
                 >
                   <ArrowRightOnRectangleIcon className="h-4 w-4" />
                   <p className="text-sm">Sign out</p>

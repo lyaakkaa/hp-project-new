@@ -1,20 +1,9 @@
 
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/authOptions';
-import Quiz from './quiz';
+'use client'
 import { redirect } from 'next/navigation';
-
+import Quiz from './quiz';
 
 export default async function page() {
-  const session = await getServerSession(authOptions);
-  
-  if (session !== null) {
-    return (
-      <>
-        <Quiz />
-      </>
-    );
-    } else {
-      redirect('/')
-  }
+  return localStorage.getItem("token") ? <Quiz /> : redirect('/');
+
 }

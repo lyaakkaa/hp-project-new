@@ -1,19 +1,17 @@
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/authOptions';
+'use client'
 import Stories from './stories';
 import { redirect } from 'next/navigation';
-
+import { useEffect, useState } from 'react';
 
 export default async function page() {
-  const session = await getServerSession(authOptions);
-  
-  if (session !== null) {
-    return (
-      <>
-        <Stories/>
-      </>
-    );
-    } else {
-      redirect('/')
-  }
+  const [hasToken, setHasToken] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      setHasToken(Boolean(token));
+    }
+  }, []);
+  return hasToken ? <Stories /> : redirect('/');
+
 }
