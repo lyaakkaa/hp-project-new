@@ -1,19 +1,9 @@
 'use client'
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/authOptions';
 import Landing from '@/components/home/landing';
 import Menu from '@/components/home/menu';
-import { useEffect, useState } from 'react';
-
+import NoSsr from '@/components/NoSsr';
 export default function Home() {
-  const [hasToken, setHasToken] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('token');
-      setHasToken(Boolean(token));
-    }
-  }, []);
-
-  return hasToken ? <Menu /> : <Landing />;
+  return <NoSsr>
+    {typeof window !== "undefined" && !localStorage.getItem("token") ? <Landing/> : <Menu/>}
+  </NoSsr>
 }

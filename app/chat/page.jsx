@@ -1,14 +1,14 @@
 'use client'
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/authOptions';
 import Landing from '@/components/home/landing';
-import Chat from './chat';
-import { redirect } from 'next/navigation';
 import StoryGenPage from './StoryGenPage';
-
+import NoSsr from '@/components/NoSsr';
 
 export default async function page() {
-  
-  return localStorage.getItem("token") ? <StoryGenPage /> : redirect('/');
+
+  return <NoSsr>
+    {typeof window !== "undefined" && !localStorage.getItem("token") ? <Landing/> : <StoryGenPage />}
+  </NoSsr>
 
 }
+
+

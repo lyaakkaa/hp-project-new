@@ -2,16 +2,12 @@
 import Stories from './stories';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import NoSsr from '@/components/NoSsr';
+import Landing from '@/components/home/landing';
 
 export default async function page() {
-  const [hasToken, setHasToken] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('token');
-      setHasToken(Boolean(token));
-    }
-  }, []);
-  return hasToken ? <Stories /> : redirect('/');
+  return <NoSsr>
+    {typeof window !== "undefined" && !localStorage.getItem("token") ? <Landing /> : <Stories />}
+  </NoSsr>
 
 }

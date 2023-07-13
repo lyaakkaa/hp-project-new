@@ -34,8 +34,8 @@ const Stories = () => {
     const res = await axios.get("http://localhost:8000/stories/", {
       method: 'GET',
       headers: { "accept": "application/json",
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGFkODE1OWVkOTgzM2I3MmEyOWJmN2UiLCJleHAiOjE2ODk3OTYxOTl9.GPUtJE7-fZf6T3ugCv0Eo2QQJQE1ZoWyp657A7JepUA"},
-    })
+                 "Authorization": "Bearer " + localStorage.getItem('token'),
+      }})
     const stories_inp = await res.data.stories
     setStories(stories_inp)
     console.log("stories:", stories_inp)
