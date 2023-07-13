@@ -146,7 +146,7 @@ const SignInModal = ({
                   <button
                     onClick={loggedInBtn}
                     type="submit"
-                    className="w-full py-2 px-4 bg-golden-500 text-black rounded-md hover:bg-golden-600"
+                    className="w-full py-2 px-4 bg-[#ffd700] text-black rounded-md hover:[#ffd700]"
                   >
                     Login
                   </button>

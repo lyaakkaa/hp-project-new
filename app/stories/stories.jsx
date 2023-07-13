@@ -1,20 +1,10 @@
 'use client'
 import Story from './story';
-import Link from 'next/link';
 import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useEffect, useRef, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 
-const slides = [
-  {"title": "Story 1", "link": "/chat"},
-  {"title": "Story 2", "link": "/chat"},
-  {"title": "Story 3", "link": "/chat"},
-  {"title": "Story 4", "link": "/chat"},
-  {"title": "Story 5", "link": "/chat"},
-  {"title": "Story 6", "link": "/chat"},
-  {"title": "Story 7", "link": "/chat"},
-];
 
 const Stories = () => {
   const [stories, setStories] = useState(null)
@@ -25,7 +15,6 @@ const Stories = () => {
     if(didFetchRef.current == false){
       didFetchRef.current = true
       fetchStories()
-      print(stories)
     }
   }, [stories])
 
