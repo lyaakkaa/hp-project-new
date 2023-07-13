@@ -4,7 +4,7 @@ import Card from '../Card';
 const menu = () => {
   return (
     <div className="absolute inset-0 overflow-auto bg-black">
-      <div className="absolute inset-0 flex flex-col overflow-hidden">
+      <div className="absolute inset-0 flex flex-col">
         <div id="stars"></div>
         <div id="stars2"></div>
         <div id="stars3"></div>
