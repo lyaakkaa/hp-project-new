@@ -32,11 +32,11 @@ const Stories = () => {
 
 
   const handlePreviousSlide = () => {
-    setSelectedSlide((prevSlide) => (prevSlide === 0 ? slides.length - 1 : prevSlide - 1));
+    setSelectedSlide((prevSlide) => (prevSlide === 0 ? stories.length - 1 : prevSlide - 1));
   };
 
   const handleNextSlide = () => {
-    setSelectedSlide((prevSlide) => (prevSlide === slides.length - 1 ? 0 : prevSlide + 1));
+    setSelectedSlide((prevSlide) => (prevSlide === stories.length - 1 ? 0 : prevSlide + 1));
   };
 
   return (

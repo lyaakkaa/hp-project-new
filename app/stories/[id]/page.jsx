@@ -19,6 +19,13 @@ const fetchStory = async (id) => {
 };
 
 
+function removeNumbersAndParentheses(text) {
+  const regex = /[0-9()]/g;
+  return text.replace(regex, '');
+}
+
+
+
 const Story = () => {
   const params = useParams()
   const id = params.id
@@ -31,7 +38,7 @@ const Story = () => {
         <div className="absolute inset-0 bg-black flex justify-center items-start">
           <div className="bg-white fixed w-5/12 h-full flex flex-col justify-start items-start p-8 overflow-auto">
             <h1 className="text-4xl mb-4 text-center mx-auto">{story.story.title}</h1>
-            <p className="">{story.story.content}</p>
+            <p className="">{removeNumbersAndParentheses(story.story.content)}</p>
           </div>
         </div>
       )

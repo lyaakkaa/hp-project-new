@@ -24,39 +24,39 @@
 
 // export default Quiz;
 
-import { useState } from "react";
+// import { useState } from "react";
 
-const boardIcons
+// const boardIcons
 
-const Quiz = () => {
+// const Quiz = () => {
 
-  const [boardData, setBoardData ] = useState([])
-  const [flippedCards, setFlippedCards] = useState([])
-  const [foundCards, setFoundCards] = useState([])
-  const [moves, setMoves] = useState(0)
-  const [gameOver, setGameOver] = useState(false)
+//   const [boardData, setBoardData ] = useState([])
+//   const [flippedCards, setFlippedCards] = useState([])
+//   const [foundCards, setFoundCards] = useState([])
+//   const [moves, setMoves] = useState(0)
+//   const [gameOver, setGameOver] = useState(false)
 
-  const initialize = () => {
-    shuffle()
-    setFlippedCards([])
-    setFoundCards([])
-    setMoves(0)
-    setGameOver(false)
+//   const initialize = () => {
+//     shuffle()
+//     setFlippedCards([])
+//     setFoundCards([])
+//     setMoves(0)
+//     setGameOver(false)
 
-  }
+//   }
 
-  const shuffle = () => {
-    const shuffledCards = 
+//   const shuffle = () => {
+//     const shuffledCards = 
 
-  }
+//   }
 
-  return (
-    <div>
-      <h1>Memory Game</h1>
-      <div className=''></div>
-    </div>
+//   return (
+//     <div>
+//       <h1>Memory Game</h1>
+//       <div className=''></div>
+//     </div>
     
-  );
-};
+//   );
+// };
 
-export default Quiz;
+// export default Quiz;

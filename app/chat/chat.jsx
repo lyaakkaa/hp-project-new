@@ -1,18 +1,14 @@
-'use client'
-
 import { throttle } from '@/lib/throttle'
-import { AcademicCapIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline'
-import axios from 'axios'
+import { PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import cx from 'classnames'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { ChatLine, LoadingChatLine } from './chat-line'
 
-// default first message to display in UI (not necessary to define the prompt)
 export const initialMessages = [
   {
     role: 'assistant',
-    content: 'Hi! I am a AI-powered Harry Potter expert that can generate wizarding world stories!✨',
+    content: 'Hi! I am an AI-powered Harry Potter expert that can generate wizarding world stories!✨ Who are the main characters?',
   },
 ]
 
@@ -24,8 +20,6 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
 
   const shouldShowLoadingIcon = loading || isGeneratingQuestion
   const inputActive = input !== '' && !shouldShowLoadingIcon
-
-  
 
   useEffect(() => {
     const input = inputRef?.current
@@ -94,7 +88,8 @@ const useMessages = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null);
 
-  // send message to API /api/chat endpoint
+  const [part, setParts] = useState("1");
+
   const sendMessage = async (newMessage) => {
     setLoading(true)
     setError(null)
@@ -103,67 +98,105 @@ const useMessages = () => {
       { role: 'user', content: newMessage },
     ]
     setMessages(newMessages)
-    const last10messages = newMessages.slice(-10) // remember last 10 messages
+    const last10messages = newMessages.slice(-10)
 
-    const response = await fetch('/api/chat', {
+    let response = "";
+
+    if(part == "1"){
+      response = await fetch('http://localhost:8000/stories/question1', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        body: JSON.stringify({
+          answer: newMessage,
+        }),
+    })
+    console.log("first part is generated " + localStorage.getItem('token'))
+    setParts("2")
+  }else if(part == "2"){
+     response = await fetch('http://localhost:8000/stories/question2', {
       method: 'POST',
       headers: {
+        'accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
       body: JSON.stringify({
-        messages: last10messages,
+        _id: localStorage.getItem("story_id"),
+        answer: newMessage,
+        next_question: localStorage.getItem("next_question")
       }),
     })
+    console.log("second part is generated " + localStorage.getItem('token'))
+    setParts("3")
+  }else if(part == "3"){
+    response = await fetch('http://localhost:8000/stories/question3', {
+     method: 'POST',
+     headers: {
+       'accept': 'application/json',
+       'Content-Type': 'application/json',
+       'Authorization': 'Bearer ' + localStorage.getItem('token')
+     },
+     body: JSON.stringify({
+      _id: localStorage.getItem("story_id"),
+      answer: newMessage,
+      next_question: localStorage.getItem("next_question")
+     }),
+   })
+   console.log("third part is generated " + localStorage.getItem('token'))
+   setParts("4")
+ }else if(part == "4"){
+  response = await fetch('http://localhost:8000/stories/question4', {
+   method: 'POST',
+   headers: {
+     'accept': 'application/json',
+     'Content-Type': 'application/json',
+     'Authorization': 'Bearer ' + localStorage.getItem('token')
+   },
+   body: JSON.stringify({
+    _id: localStorage.getItem("story_id"),
+    answer: newMessage,
+    next_question: localStorage.getItem("next_question")
+   }),
+ })
+ console.log("fourth part is generated " + localStorage.getItem('token'))
+ setParts("5")
+}
 
-    console.log('Edge function returned.')
 
-    if (!response.ok) {
-      console.log(response)
-      setError(response.statusText)
-      setLoading(false)
-      return
-    }
+  const data = response.body
+  if (!data) {
+    return
+  }
+  const responseData = await response.json(); 
 
-    // This data is a ReadableStream
-    const data = response.body
-    if (!data) {
-      return
-    }
+  console.log("reseponse data: ", responseData)
+  const { _id, next_question } = responseData;
+  console.log("_id: ", _id) 
+  console.log("Next question: ", next_question)
+  localStorage.setItem("story_id", _id)
+  localStorage.setItem("next_question", next_question)
 
-    // This data is a ReadableStream
 
-    setIsMessageStreaming(true)
+  setMessages([
+    ...newMessages,
+    { role: 'assistant', content: next_question }, 
+  ]);
 
-    const reader = data.getReader()
-    const decoder = new TextDecoder()
-    let done = false
+  setLoading(false);
 
-    let lastMessage = ''
-
-    while (!done) {
-      const { value, done: doneReading } = await reader.read()
-      done = doneReading
-      const chunkValue = decoder.decode(value)
-
-      lastMessage = lastMessage + chunkValue
-
-      setMessages([
-        ...newMessages,
-        { role: 'assistant', content: lastMessage },
-      ])
-
-      setLoading(false)
-    }
-
-    setIsMessageStreaming(false)
+  setIsMessageStreaming(false)
   }
 
   return {
-    messages,
-    isMessageStreaming,
-    loading,
-    error,
-    sendMessage,
+  messages,
+  isMessageStreaming,
+  loading,
+  error,
+  sendMessage,
   }
 }
 
@@ -224,11 +257,11 @@ export default function Chat() {
         />
       </div>
       <InputMessage
-          input={input}
-          setInput={setInput}
-          sendMessage={sendMessage}
-          isLoading={loading || isMessageStreaming}
-        />
+        input={input}
+        setInput={setInput}
+        sendMessage={sendMessage}
+        loading={loading || isMessageStreaming}
+      />
       <Toaster />
     </div>
   )
