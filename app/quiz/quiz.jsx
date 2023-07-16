@@ -1,4 +1,5 @@
-// import React from 'react';
+import React, { useState } from 'react';
+import SingleCard from './singleCard';
 
 // const Quiz = () => {
 //   return (
@@ -22,41 +23,54 @@
 //   );
 // };
 
-// export default Quiz;
 
-// import { useState } from "react";
 
-// const boardIcons
+const cardImages = [
+    {'src': '/card1.avif'},
+    {'src': '/card2.webp'},
+    {'src': '/card3.jpg'},
+    {'src': '/card4.webp'},
+    {'src': '/card5.jpg'},
+    {'src': '/card6.webp'},
+]
 
-// const Quiz = () => {
+const Quiz = () => {
+    const [cards, setCards] = useState([]);
+    const [turns, setTurns] = useState(0);
+  
+    const shuffleCards = () => {
+      const shuffledCards = [...cardImages, ...cardImages]
+        .sort(() => Math.random() - 0.5)
+        .map((card) => ({ ...card, id: Math.random() }));
+      setCards(shuffledCards);
+      setTurns(0);
+    };
+  
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <button
+          onClick={shuffleCards}
+          className="bg-transparent border-2 border-white py-2 px-4 rounded-md text-white font-bold cursor-pointer text-lg hover:bg-pink-500 hover:text-white mb-4"
+        >
+          New Game
+        </button>
+  
+        <div className="flex-1 overflow-y-auto">
+          <div className="card-grid mt-10 grid grid-cols-4 gap-20">
+            {cards.map((card) => (
+                <SingleCard key={card.id} card={card}></SingleCard>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
 
-//   const [boardData, setBoardData ] = useState([])
-//   const [flippedCards, setFlippedCards] = useState([])
-//   const [foundCards, setFoundCards] = useState([])
-//   const [moves, setMoves] = useState(0)
-//   const [gameOver, setGameOver] = useState(false)
+  
+  
 
-//   const initialize = () => {
-//     shuffle()
-//     setFlippedCards([])
-//     setFoundCards([])
-//     setMoves(0)
-//     setGameOver(false)
 
-//   }
 
-//   const shuffle = () => {
-//     const shuffledCards = 
+export default Quiz;
 
-//   }
-
-//   return (
-//     <div>
-//       <h1>Memory Game</h1>
-//       <div className=''></div>
-//     </div>
-    
-//   );
-// };
-
-// export default Quiz;

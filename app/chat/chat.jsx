@@ -103,6 +103,8 @@ const useMessages = () => {
     let response = "";
 
     if(part == "1"){
+      localStorage.removeItem('story_id')
+      localStorage.removeItem('next_question')
       response = await fetch('http://localhost:8000/stories/question1', {
         method: 'POST',
         headers: {
@@ -127,7 +129,7 @@ const useMessages = () => {
       body: JSON.stringify({
         _id: localStorage.getItem("story_id"),
         answer: newMessage,
-        next_question: localStorage.getItem("next_question")
+        question: localStorage.getItem("next_question")
       }),
     })
     console.log("second part is generated " + localStorage.getItem('token'))
@@ -143,7 +145,7 @@ const useMessages = () => {
      body: JSON.stringify({
       _id: localStorage.getItem("story_id"),
       answer: newMessage,
-      next_question: localStorage.getItem("next_question")
+      question: localStorage.getItem("next_question")
      }),
    })
    console.log("third part is generated " + localStorage.getItem('token'))
@@ -159,10 +161,12 @@ const useMessages = () => {
    body: JSON.stringify({
     _id: localStorage.getItem("story_id"),
     answer: newMessage,
-    next_question: localStorage.getItem("next_question")
+    question: localStorage.getItem("next_question")
    }),
  })
  console.log("fourth part is generated " + localStorage.getItem('token'))
+ localStorage.removeItem('story_id')
+ localStorage.removeItem('next_question')
  setParts("5")
 }
 
