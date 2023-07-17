@@ -596,3 +596,22 @@ html, body {
     animation: spin 2s linear infinite;
 }
   
+
+
+
+.blink-cursor {
+    animation: blink 0.7s infinite;
+    
+  }
+  
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }

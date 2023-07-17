@@ -85,14 +85,19 @@ const StreamText = ({ content }) => {
         currentContent = content.slice(0, i);
         setDisplayedContent(currentContent);
         setLastStreamedIndex(i);
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       }
     };
 
     displayStream();
   }, [content, lastStreamedIndex]);
 
-  return <>{displayedContent}</>;
+  return (
+    <span>
+      {displayedContent}
+      <span className="blink-cursor">|</span>
+    </span>
+  );
 };
 
 
