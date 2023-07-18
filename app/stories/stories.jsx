@@ -1,10 +1,10 @@
 'use client'
+import React from 'react';
 import Story from './story';
 import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useEffect, useRef, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
-
 
 const Stories = () => {
   const [stories, setStories] = useState(null)
@@ -12,7 +12,7 @@ const Stories = () => {
   const [selectedSlide, setSelectedSlide] = useState(0);
 
   useEffect(() => {
-    if(didFetchRef.current == false){
+    if (didFetchRef.current === false) {
       didFetchRef.current = true
       fetchStories()
     }
@@ -22,14 +22,15 @@ const Stories = () => {
     let path = "/"
     const res = await axios.get("http://localhost:8000/stories/", {
       method: 'GET',
-      headers: { "accept": "application/json",
-                 "Authorization": "Bearer " + localStorage.getItem('token'),
-      }})
+      headers: {
+        "accept": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem('token'),
+      }
+    })
     const stories_inp = await res.data.stories
     setStories(stories_inp)
     console.log("stories:", stories_inp)
   }
-
 
   const handlePreviousSlide = () => {
     setSelectedSlide((prevSlide) => (prevSlide === 0 ? stories.length - 1 : prevSlide - 1));
@@ -42,16 +43,22 @@ const Stories = () => {
   return (
     <div className="wrapper absolute inset-0 overflow-hidden">
       <div className="z-10 flex flex-wrap justify-center items-center">
-        <Carousel selectedItem={selectedSlide} showArrows={false} showThumbs={false}>
-          {stories && stories.map((story) => (
-            <Story
-              key={story._id}
-              title={story.title}
-              link={`/stories/${story._id}`}
-              text={story.content.substring(0, 50)+'...'}
-            />
-          ))}
-        </Carousel>
+        {stories && stories.length > 0 ? (
+          <Carousel selectedItem={selectedSlide} showArrows={false} showThumbs={false}>
+            {stories.map((story) => (
+              <Story
+                key={story._id}
+                title={story.title}
+                link={`/stories/${story._id}`}
+                text={story.content.substring(0, 50) + '...'}
+              />
+            ))}
+          </Carousel>
+        ) : (
+          <div className="text-black bg-gray-500 text-center absolute inset-0 flex justify-center items-center">
+            <h2>Oops, no stories</h2>
+          </div>
+        )}
         <div className="absolute top-1/2 left-2">
           <button onClick={handlePreviousSlide} className="bg-gray-200 px-3 py-2 rounded-full text-lg">
             &lt;

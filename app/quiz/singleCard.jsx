@@ -1,25 +1,34 @@
-import React from 'react'
+import React from 'react';
 
-const SingleCard = ({ card }) => {
-  return (
+const SingleCard = ({ card, handleChoice, flipped }) => {
+
+    const handleClick = () => {
+        handleChoice(card)
+    }
+
+    
+    return (
+        <div className="relative">
         <div className="card">
-            <div>
-                <img
-                    src={card.src}
-                    className="front"
-                    alt="card front"
-                    width={20}
-                    height={20}
-                ></img>
-                <img
-                    src="/cover.png"
-                    className="back"
-                    alt="card back"
-                    width={100}
-                ></img>
+            <div className={flipped ? 'flipped' : ''}>
+            <img
+                src={card.src}
+                className="front w-full block border-2 border-white rounded-md"
+                alt="card front"
+                width={80}
+                height={80}
+            />
+            <img
+                src="/cover.png"
+                className="back w-full block border-2 border-white rounded-md"
+                alt="card back"
+                width={50}
+                onClick={handleClick}
+            />
             </div>
         </div>
-    )
-}
+        </div>
+    );
+};
 
-export default SingleCard
+export default SingleCard;

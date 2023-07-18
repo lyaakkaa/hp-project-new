@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
 import SingleCard from './singleCard';
 
 // const Quiz = () => {
@@ -25,18 +26,29 @@ import SingleCard from './singleCard';
 
 
 
+// const cardImages = [
+//     {'src': '/card1.avif'},
+//     {'src': '/card2.webp'},
+//     {'src': '/card3.jpg'},
+//     {'src': '/card4.webp'},
+//     {'src': '/card5.jpg'},
+//     {'src': '/card6.webp'},
+// ]
+
 const cardImages = [
-    {'src': '/card1.avif'},
-    {'src': '/card2.webp'},
-    {'src': '/card3.jpg'},
-    {'src': '/card4.webp'},
-    {'src': '/card5.jpg'},
-    {'src': '/card6.webp'},
+  {'src': '/1.png', matched: false},
+  {'src': '/2.png', matched: false},
+  {'src': '/3.png', matched: false},
+  {'src': '/4.png', matched: false},
+  {'src': '/5.png', matched: false},
+  {'src': '/6.png', matched: false},
 ]
 
 const Quiz = () => {
     const [cards, setCards] = useState([]);
     const [turns, setTurns] = useState(0);
+    const [choiceOne, setChoiceOne] = useState(null);
+    const [choiceTwo, setChoiceTwo] = useState(null);
   
     const shuffleCards = () => {
       const shuffledCards = [...cardImages, ...cardImages]
@@ -45,20 +57,63 @@ const Quiz = () => {
       setCards(shuffledCards);
       setTurns(0);
     };
+
+    // handle a choice 
+    const handleChoice = (card) => {
+      // console.log(card);
+      choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+      
+    }
+    // compare 2 selected cards 
+    useEffect(()=>{
+      if (choiceOne && choiceTwo){
+        if (choiceOne.src === choiceTwo.src){
+          setCards(prevCards => {
+            return prevCards.map(card => {
+              if(card.src === choiceOne.src){
+                return {...card, matched: true};
+              }
+              else{
+                return card;
+              }
+            })
+          })
+          resetTurn();
+        }
+        else{
+          // console.log('those cards do not match');
+          resetTurn();
+        }
+      }
+    },[choiceOne, choiceTwo])
+    console.log(cards)
+
+
+    // reset choices and increase turn
+    const resetTurn = () => {
+      setChoiceOne(null)
+      setChoiceTwo(null)
+      setTurns(prevTurns => prevTurns + 1)
+    }
+
   
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="overflow-auto flex flex-col items-center justify-center">
         <button
           onClick={shuffleCards}
           className="bg-transparent border-2 border-white py-2 px-4 rounded-md text-white font-bold cursor-pointer text-lg hover:bg-pink-500 hover:text-white mb-4"
         >
           New Game
         </button>
-  
         <div className="flex-1 overflow-y-auto">
           <div className="card-grid mt-10 grid grid-cols-4 gap-20">
             {cards.map((card) => (
-                <SingleCard key={card.id} card={card}></SingleCard>
+                <SingleCard
+                  key={card.id} 
+                  card={card}
+                  handleChoice={handleChoice}
+                  flipped={card === choiceOne || card === choiceTwo || card.matched}
+                ></SingleCard>
             ))}
           </div>
         </div>
