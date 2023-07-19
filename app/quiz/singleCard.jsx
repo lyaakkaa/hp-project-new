@@ -1,9 +1,11 @@
 import React from 'react';
 
-const SingleCard = ({ card, handleChoice, flipped }) => {
+const SingleCard = ({ card, handleChoice, flipped, disabled}) => {
 
     const handleClick = () => {
-        handleChoice(card)
+        if (!disabled){
+            handleChoice(card)
+        }
     }
 
     
@@ -13,16 +15,15 @@ const SingleCard = ({ card, handleChoice, flipped }) => {
             <div className={flipped ? 'flipped' : ''}>
             <img
                 src={card.src}
-                className="front w-full block border-2 border-white rounded-md"
+                className="front block border-2 border-white rounded-md"
                 alt="card front"
-                width={80}
-                height={80}
+                width={100}
             />
             <img
                 src="/cover.png"
-                className="back w-full block border-2 border-white rounded-md"
+                className="back block border-2 border-white rounded-md"
                 alt="card back"
-                width={50}
+                width={100}
                 onClick={handleClick}
             />
             </div>

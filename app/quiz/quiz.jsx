@@ -26,106 +26,106 @@ import SingleCard from './singleCard';
 
 
 
-// const cardImages = [
-//     {'src': '/card1.avif'},
-//     {'src': '/card2.webp'},
-//     {'src': '/card3.jpg'},
-//     {'src': '/card4.webp'},
-//     {'src': '/card5.jpg'},
-//     {'src': '/card6.webp'},
-// ]
-
 const cardImages = [
-  {'src': '/1.png', matched: false},
-  {'src': '/2.png', matched: false},
-  {'src': '/3.png', matched: false},
-  {'src': '/4.png', matched: false},
-  {'src': '/5.png', matched: false},
-  {'src': '/6.png', matched: false},
+    {'src': '/card1.avif', matched: false},
+    {'src': '/card2.webp', matched: false},
+    {'src': '/card3.jpg', matched: false},
+    {'src': '/card4.webp', matched: false},
+    {'src': '/card5.jpg', matched: false},
+    {'src': '/card6.webp', matched: false},
 ]
 
+// const cardImages = [
+//   {'src': '/1.png', matched: false},
+//   {'src': '/2.png', matched: false},
+//   {'src': '/3.png', matched: false},
+//   {'src': '/4.png', matched: false},
+//   {'src': '/5.png', matched: false},
+//   {'src': '/6.png', matched: false},
+// ]
+
 const Quiz = () => {
-    const [cards, setCards] = useState([]);
-    const [turns, setTurns] = useState(0);
-    const [choiceOne, setChoiceOne] = useState(null);
-    const [choiceTwo, setChoiceTwo] = useState(null);
-  
-    const shuffleCards = () => {
-      const shuffledCards = [...cardImages, ...cardImages]
-        .sort(() => Math.random() - 0.5)
-        .map((card) => ({ ...card, id: Math.random() }));
-      setCards(shuffledCards);
-      setTurns(0);
-    };
+  const [cards, setCards] = useState([]);
+  const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
-    // handle a choice 
-    const handleChoice = (card) => {
-      // console.log(card);
-      choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
-      
-    }
-    // compare 2 selected cards 
-    useEffect(()=>{
-      if (choiceOne && choiceTwo){
-        if (choiceOne.src === choiceTwo.src){
-          setCards(prevCards => {
-            return prevCards.map(card => {
-              if(card.src === choiceOne.src){
-                return {...card, matched: true};
-              }
-              else{
-                return card;
-              }
-            })
-          })
-          resetTurn();
-        }
-        else{
-          // console.log('those cards do not match');
-          resetTurn();
-        }
+  const shuffleCards = () => {
+    const shuffledCards = [...cardImages, ...cardImages]
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, id: Math.random() }));
+    
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setCards(shuffledCards);
+    setTurns(0);
+  };
+
+  // handle a choice 
+  const handleChoice = (card) => {
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  };
+
+  // compare 2 selected cards 
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      setDisabled(true);
+      if (choiceOne.src === choiceTwo.src) {
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true };
+            } else {
+              return card;
+            }
+          });
+        });
+        resetTurn();
+      } else {
+        setTimeout(() => resetTurn(), 1000)
       }
-    },[choiceOne, choiceTwo])
-    console.log(cards)
-
-
-    // reset choices and increase turn
-    const resetTurn = () => {
-      setChoiceOne(null)
-      setChoiceTwo(null)
-      setTurns(prevTurns => prevTurns + 1)
     }
+  }, [choiceOne, choiceTwo]);
 
-  
-    return (
-      <div className="overflow-auto flex flex-col items-center justify-center">
-        <button
-          onClick={shuffleCards}
-          className="bg-transparent border-2 border-white py-2 px-4 rounded-md text-white font-bold cursor-pointer text-lg hover:bg-pink-500 hover:text-white mb-4"
-        >
-          New Game
-        </button>
-        <div className="flex-1 overflow-y-auto">
-          <div className="card-grid mt-10 grid grid-cols-4 gap-20">
-            {cards.map((card) => (
-                <SingleCard
-                  key={card.id} 
-                  card={card}
-                  handleChoice={handleChoice}
-                  flipped={card === choiceOne || card === choiceTwo || card.matched}
-                ></SingleCard>
-            ))}
-          </div>
+  // reset choices and increase turn
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns(prevTurns => prevTurns + 1);
+    setDisabled(false);
+  };
+
+  // start a new game automatically
+  useEffect(() => {
+    shuffleCards();
+  }, [])
+
+  return (
+
+    <div className="flex flex-col items-center justify-center">
+      <button
+        onClick={shuffleCards}
+        className="bg-transparent border-2 border-white py-2 px-4 rounded-md text-white font-bold cursor-pointer text-lg hover:bg-pink-500 hover:text-white mb-4"
+      >
+        New Game
+      </button>
+      <div className="flex-1">
+        <div className="card-grid mt-10 grid grid-cols-4 gap-20">
+          {cards.map((card) => (
+            <SingleCard
+              key={card.id}
+              card={card}
+              handleChoice={handleChoice}
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              disabled={disabled}
+            />
+          ))}
         </div>
       </div>
-    );
-  };
-  
-
-  
-  
-
-
+      <p className='text-white'>Turns: {turns}</p>
+    </div>
+  );
+};
 
 export default Quiz;
-
