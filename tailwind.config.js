@@ -8,6 +8,10 @@ module.exports = {
   },
   theme: {
     extend: {
+      colors: {
+        'primary-black': '#1A232E',
+        'secondary-white': '#c7c7c7',
+      },
       fontFamily: {
         display: ["var(--font-sf)", "system-ui", "sans-serif"],
         default: ["var(--font-inter)", "system-ui", "sans-serif"],
