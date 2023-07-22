@@ -35,7 +35,7 @@ const ExploreCard = ({ id, imgUrl, title, index, active, handleClick, link }) =>
           />
         </div>
         <p className="font-normal text-[16px] leading-[20.16px] text-white uppercase">
-          <Link href={link}>Enter</Link>
+          <Link href={link}>Click here</Link>
         </p>
         <h2 className="mt-[24px] font-semibold sm:text-[32px] text-[24px] text-white">
           {title}

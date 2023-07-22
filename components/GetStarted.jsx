@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styles from '@/app/styles';
-import { staggerContainer, fadeIn, planetVariants } from '../utils/motion';
+import { staggerContainer, fadeIn, magicVariants } from '../utils/motion';
 import { TitleText, TypingText } from "./CustomTexts";
 import StartSteps from './StartSteps';
 
@@ -16,6 +16,7 @@ const startingFeatures = [
 
 const GetStarted = () => (
   <section className={`${styles.paddings} relative z-10`}>
+    <div className="gradient-03 z-0"/>
     <motion.div
       variants={staggerContainer}
       initial='hidden'
@@ -24,7 +25,7 @@ const GetStarted = () => (
       className={`${styles.innerWidth} mx-auto flex lg:flex-row flex-col gap-8`}
     >
       <motion.div 
-        variants={planetVariants('left')}
+        variants={magicVariants('left')}
         className={`flex-1 ${styles.flexCenter}`}
       >
         <img

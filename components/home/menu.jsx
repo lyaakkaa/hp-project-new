@@ -38,7 +38,7 @@ const menu = () => {
 
   return (
 
-    <div className={`${styles.paddings} bg-primary-black absolute inset-0 overflow-auto`}>
+    <div className={`${styles.paddings} bg-primary-black absolute inset-0 overflow-x-hidden`}>
       <div className="gradient-04 z-0"/>
       <div className="gradient-06 z-0"/>
       <Hero/>
