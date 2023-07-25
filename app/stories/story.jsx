@@ -41,22 +41,17 @@ const Story = ({ number, title, link, text, id }) => {
 
   return (
     <div
+      className="overflow-hidden"
       style={{
-        overflow: 'hidden',
         height: storyHeight,
         transition: 'height 0.3s ease-out',
       }}
     >
       <div
-        className={`flex items-center p-2 rounded-lg my-6 ${isDeleting ? 'slide-out' : ''}`}
+        className={`flex flex-col md:flex-row items-center p-2 rounded-lg my-6 ${isDeleting ? 'slide-out' : ''}`}
         onAnimationEnd={handleAnimationEnd}
-        style={{
-          opacity: isDeleting ? '0' : '1',
-          margin: '16px 0',
-          padding: '16px',
-        }}
       >
-        <div className="rounded-[10px] w-24 h-24 overflow-hidden">
+        <div className="md:w-24 md:h-24 w-16 h-16 overflow-hidden">
           <img
             src={number % 2 === 0 ? '/group.jpg' : '/poster.jpg'}
             alt={title}
@@ -64,20 +59,20 @@ const Story = ({ number, title, link, text, id }) => {
           />
         </div>
 
-        <div className="flex flex-col flex-grow ml-4">
-          <div className="text-[20px] font-semibold text-white">{title}</div>
-          <div className="text-sm mt-[10px] text-gray-400">{text}</div>
+        <div className="flex flex-col md:flex-row flex-grow md:ml-4 mt-4 md:mt-0">
+          <div className="text-lg md:text-xl font-semibold text-white">{title}</div>
+          <div className="text-sm mt-2 md:mt-0 md:ml-4 text-gray-400">{text}</div>
         </div>
 
         <button
           onClick={handleDelete}
-          className="mr-2 bg-red-500 text-white px-4 py-2 rounded-lg transition-colors duration-300 hover:bg-red-600 flex items-center"
+          className="md:ml-4 mt-4 md:mt-0 bg-red-500 text-white px-4 py-2 rounded-lg transition-colors duration-300 hover:bg-red-600"
         >
-          <img src="/trash.png"></img>
+          <img src="/trash.png" alt="Delete"></img>
         </button>
 
         <Link href={link}>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors duration-300 hover:bg-blue-600">
+          <button className="md:ml-4 mt-4 md:mt-0 bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors duration-300 hover:bg-blue-600">
             Read More
           </button>
         </Link>
