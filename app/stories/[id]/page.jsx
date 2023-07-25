@@ -59,7 +59,7 @@ const Story = () => {
             <div className="bg-white fixed w-5/12 h-full flex flex-col justify-start items-start p-8 overflow-auto">
               <h1 className="text-4xl mb-4 text-center mx-auto">{story.story.title}</h1>
               <p className="">{removeNumbersAndParentheses(story.story.content)}</p>
-              <button onClick={createAudio}>Create Audio</button>
+              <button onClick={createAudio}>▶ Play</button>
               {isCreatingAudio ? (
                 <p>Audio is being created...</p>
               ) : null}
