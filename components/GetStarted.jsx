@@ -8,9 +8,9 @@ import { TitleText, TypingText } from "./CustomTexts";
 import StartSteps from './StartSteps';
 
 const startingFeatures = [
-    "Endless Inspiration: Magic Pen provides the user with an unlimited stream of fascinating stories that can be used for creative inspiration. It's a great way to develop your writing skills and experiment with different plots and characters",
-    "An in-depth immersion into the world of Harry Potter: Magic Pen allows Harry Potter fans to continue to enjoy this beautiful universe even after completing a series of books and films.",
-    "Learning English: Magic Pen helps English language learners develop their reading and comprehension skills in English.",
+    "Endless Inspiration",
+    "An in-depth immersion into the world of Harry Potter",
+    "Learning English",
 ];
 
 
@@ -40,7 +40,7 @@ const GetStarted = () => (
         className='flex-[0.75] flex justify-center flex-col'
       >
         <TypingText title="| Why should I use Magic Pen?"/>
-        <TitleText title={<>Get started with just a few clicks</>} />
+        <TitleText title={<>Our features</>} />
         <div className='mt-[31px] flex flex-col max-w-[370px] gap-[24px]'>
           {startingFeatures.map((feature, index) => (
             <StartSteps

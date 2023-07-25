@@ -4,12 +4,16 @@ import Story from './story';
 import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useEffect, useRef, useState } from 'react';
-import { Carousel } from 'react-responsive-carousel';
+import styles from '../styles';
+
+function removeNumbersAndParentheses(text) {
+  const regex = /[0-9()"$]/g;
+  return text.replace(regex, '');
+}
 
 const Stories = () => {
   const [stories, setStories] = useState(null)
   const didFetchRef = useRef(false)
-  const [selectedSlide, setSelectedSlide] = useState(0);
 
   useEffect(() => {
     if (didFetchRef.current === false) {
@@ -32,44 +36,21 @@ const Stories = () => {
     console.log("stories:", stories_inp)
   }
 
-  const handlePreviousSlide = () => {
-    setSelectedSlide((prevSlide) => (prevSlide === 0 ? stories.length - 1 : prevSlide - 1));
-  };
-
-  const handleNextSlide = () => {
-    setSelectedSlide((prevSlide) => (prevSlide === stories.length - 1 ? 0 : prevSlide + 1));
-  };
 
   return (
-    <div className="wrapper absolute inset-0 overflow-hidden">
-      <div className="z-10 flex flex-wrap justify-center items-center">
-        {stories && stories.length > 0 ? (
-          <Carousel selectedItem={selectedSlide} showArrows={false} showThumbs={false}>
-            {stories.map((story) => (
-              <Story
-                key={story._id}
-                title={story.title}
-                link={`/stories/${story._id}`}
-                text={story.content.substring(0, 50) + '...'}
-              />
-            ))}
-          </Carousel>
-        ) : (
-          <div className="text-black bg-gray-500 text-center absolute inset-0 flex justify-center items-center">
-            <h2>Oops, no stories</h2>
-          </div>
-        )}
-        <div className="absolute top-1/2 left-2">
-          <button onClick={handlePreviousSlide} className="bg-gray-200 px-3 py-2 rounded-full text-lg">
-            &lt;
-          </button>
-        </div>
-        <div className="absolute top-1/2 right-2">
-          <button onClick={handleNextSlide} className="bg-gray-200 px-3 py-2 rounded-full text-lg">
-            &gt;
-          </button>
-        </div>
-      </div>
+    <div className={`${styles.paddings} bg-primary-black absolute inset-0 overflow-x-hidden`}>
+
+        {stories && stories.map((story, index) => (
+          <Story
+            key={index}
+            number={index+1}
+            title={removeNumbersAndParentheses(story.title) || `Story ${index + 1}`}
+            link={`/stories/${story._id}`}
+            text={story.content.substring(0, 50) + '...'}
+            id={story._id}
+          />
+        ))}
+
     </div>
   );
 };

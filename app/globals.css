@@ -11,7 +11,7 @@ html, body {
 }
 
 .wrapper {
-    background-image: url('/voldemort-and-harry.jpg');
+    background-image: url('/oldbook.jpg');
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -94,6 +94,7 @@ html, body {
       hsl(220deg 76% 51%) 100%
     );
     filter: blur(125px);
+    animation: pulse 2s infinite;
   }
   
   .hero-gradient {
@@ -103,6 +104,7 @@ html, body {
       #34acc7 53.65%,
       #a134c7 100%
     );
+    animation: pulse 2s infinite;
   }
   
   .gradient-02 {
@@ -114,6 +116,7 @@ html, body {
   
     background: #7aebfb;
     filter: blur(190px);
+    animation: pulse 2s infinite;
   }
   
   .glassmorphism {
@@ -134,6 +137,7 @@ html, body {
     background: rgba(149, 66, 232, 0.35);
     filter: blur(175px);
     transform: rotate(-114.2deg);
+    animation: pulse 2s infinite;
   }
   
   .gradient-04 {
@@ -146,6 +150,7 @@ html, body {
     background: rgba(45, 72, 152, 0.75);
     filter: blur(200px);
     transform: rotate(-53.13deg);
+    animation: pulse 2s infinite;
   }
   
   .gradient-05 {
@@ -154,6 +159,7 @@ html, body {
       rgba(255, 255, 255, 0.04) 0%,
       rgba(255, 255, 255, 0) 100%
     );
+    animation: pulse 2s infinite;
   }
 
   .gradient-06 {
@@ -166,6 +172,7 @@ html, body {
     background: rgba(45, 72, 152, 0.75);
     filter: blur(200px);
     transform: rotate(-53.13deg);
+    animation: pulse 2s infinite;
   }
   
   
@@ -178,6 +185,7 @@ html, body {
   
     background: #8d39a3;
     filter: blur(175px);
+    animation: pulse 2s infinite;
   }
   
   .footer-gradient {
@@ -189,5 +197,17 @@ html, body {
   
     background: #65c4fa;
     filter: blur(150px);
+    animation: pulse 2s infinite;
   }
   
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.1);
+    }
+  }

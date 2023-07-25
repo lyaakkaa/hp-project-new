@@ -85,7 +85,7 @@ const StreamText = ({ content }) => {
         currentContent = content.slice(0, i);
         setDisplayedContent(currentContent);
         setLastStreamedIndex(i);
-        await new Promise((resolve) => setTimeout(resolve, 50));
+        await new Promise((resolve) => setTimeout(resolve, 5));
       }
     };
 
