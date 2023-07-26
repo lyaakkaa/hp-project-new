@@ -16,7 +16,7 @@ const Story = ({ number, title, link, text, id }) => {
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
-      const response = await fetch(`http://localhost:8000/stories/${id}`, {
+      const response = await fetch(`https://fastapi-ht4s.onrender.com/stories/${id}`, {
         method: 'DELETE',
         headers: {
           "accept": "application/json",

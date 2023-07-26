@@ -12,7 +12,7 @@ const fetchStory = async () => {
     console.log("story_id", localStorage.getItem("story_id"))
     console.log("token", localStorage.getItem("token"))
     try {
-      const response = await axios.get(`http://localhost:8000/stories/${localStorage.getItem("story_id")}`, {
+      const response = await axios.get(`https://fastapi-ht4s.onrender.com/stories/${localStorage.getItem("story_id")}`, {
         headers: {
           "Authorization": "Bearer " + localStorage.getItem('token'),
           "accept": 'application/json',

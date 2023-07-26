@@ -21,7 +21,7 @@ const SignInModal = ({
   const loginUser = async (credentials) => {
     try {
       const response = await axios.post(
-        'http://localhost:8000/auth/users/tokens',
+        'https://fastapi-ht4s.onrender.com/auth/users/tokens',
         new URLSearchParams(credentials).toString(),
         {
           headers: {
@@ -38,7 +38,7 @@ const SignInModal = ({
 
   const registerUser = async (credentials) => {
     try {
-      const response = await axios.post('http://localhost:8000/auth/users', credentials, {
+      const response = await axios.post('https://fastapi-ht4s.onrender.com/auth/users', credentials, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',

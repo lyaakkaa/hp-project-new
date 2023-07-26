@@ -1,6 +1,6 @@
 'use client'
 import Landing from '@/components/home/landing';
-import StoryGenPage from './StoryGenPage';
+import StoryGenPage from './generaion';
 import NoSsr from '@/components/NoSsr';
 
 export default async function page() {

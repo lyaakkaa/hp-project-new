@@ -105,7 +105,7 @@ const useMessages = () => {
     if(part == "1"){
       localStorage.removeItem('story_id')
       localStorage.removeItem('next_question')
-      response = await fetch('http://localhost:8000/stories/question1', {
+      response = await fetch('https://fastapi-ht4s.onrender.com/stories/question1', {
         method: 'POST',
         headers: {
           'accept': 'application/json',
@@ -119,7 +119,7 @@ const useMessages = () => {
     console.log("first part is generated " + localStorage.getItem('token'))
     setParts("2")
   }else if(part == "2"){
-     response = await fetch('http://localhost:8000/stories/question2', {
+     response = await fetch('https://fastapi-ht4s.onrender.com/stories/question2', {
       method: 'POST',
       headers: {
         'accept': 'application/json',
@@ -135,7 +135,7 @@ const useMessages = () => {
     console.log("second part is generated " + localStorage.getItem('token'))
     setParts("3")
   }else if(part == "3"){
-    response = await fetch('http://localhost:8000/stories/question3', {
+    response = await fetch('https://fastapi-ht4s.onrender.com/stories/question3', {
      method: 'POST',
      headers: {
        'accept': 'application/json',
@@ -151,7 +151,7 @@ const useMessages = () => {
    console.log("third part is generated " + localStorage.getItem('token'))
    setParts("4")
  }else if(part == "4"){
-  response = await fetch('http://localhost:8000/stories/question4', {
+  response = await fetch('https://fastapi-ht4s.onrender.com/stories/question4', {
    method: 'POST',
    headers: {
      'accept': 'application/json',

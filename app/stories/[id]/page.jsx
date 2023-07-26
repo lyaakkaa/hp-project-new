@@ -7,7 +7,7 @@ const fetchStory = async (id) => {
   if (typeof window === "undefined") {
     return {}
   }
-  const response = await axios.get(`http://localhost:8000/stories/${id}`, {
+  const response = await axios.get(`https://fastapi-ht4s.onrender.com/stories/${id}`, {
     headers: {
       "Authorization": "Bearer " + localStorage.getItem('token'),
       "accept": 'application/json',
@@ -33,7 +33,7 @@ const Story = () => {
     try {
       setIsCreatingAudio(true);
       const response = await axios.post(
-        "http://localhost:8000/stories/create_audio",
+        "https://fastapi-ht4s.onrender.com/stories/create_audio",
         { story_id: id },
         {
           headers: {

@@ -24,7 +24,7 @@ const Stories = () => {
 
   const fetchStories = async () => {
     let path = "/"
-    const res = await axios.get("http://localhost:8000/stories/", {
+    const res = await axios.get("https://fastapi-ht4s.onrender.com/stories/", {
       method: 'GET',
       headers: {
         "accept": "application/json",
