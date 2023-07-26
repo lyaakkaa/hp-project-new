@@ -1,12 +1,11 @@
 'use client'
-import React from 'react';
-import Card from '../Card';
+
 import styles from '@/app/styles';
 import { motion } from 'framer-motion';
 import { staggerContainer } from '../../utils/motion';
 import { TypingText, TitleText } from '../CustomTexts';
 import ExploreCard from '../ExploreCard';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import About from '../About';
 import Hero from '../Hero';
 import GetStarted from '../GetStarted';
@@ -33,7 +32,7 @@ export const cards = [
   },
 ];
 
-const menu = () => {
+const Menu = () => {
 
   const [active, setActive] = useState('world-1');
 
@@ -76,4 +75,4 @@ const menu = () => {
   );
 }
 
-export default menu;
+export default Menu;
