@@ -61,16 +61,32 @@ const StoryGenPage = () => {
 
   return (
     <div className="flex flex-column w-full h-[90vh]">
-      <div className="flex inset-y-0 left-0 basis-1/3 border-r border-gray-300">
+      <div className="flex inset-y-0 left-0 basis-1/2 border-r border-gray-300">
         <Chat />
       </div>
-      <div className="flex inset-y-0 right-0 basis-2/3 bg-white overflow-auto">
+      <div className="flex inset-y-0 right-0 basis-1/2 bg-white overflow-auto">
         {storyInfo && (
           <StreamText content={removeNumbersAndParentheses(storyInfo)} />
         )}
       </div>
     </div>
   );
+  // return (
+  //   <div className="flex flex-col w-full h-[90vh]">
+  //     <div className="flex-1 h-full inset-y-0 right-0 basis-1/2 bg-white overflow-auto">
+  //       {storyInfo && (
+  //         <StreamText content={removeNumbersAndParentheses(storyInfo)} />
+  //       )}
+  //     </div>
+  //     <div className="flex-1 h-full inset-y-0 left-0 basis-1/2 border-r border-gray-300">
+  //       <Chat />
+  //     </div>
+  //   </div>
+  // );
+  
+  
+  
+  
 };
 
 const StreamText = ({ content }) => {
