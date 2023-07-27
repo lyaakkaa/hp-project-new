@@ -9,27 +9,47 @@ const SingleCard = ({ card, handleChoice, flipped, disabled}) => {
     }
 
     
+    // return (
+    //     <div className="relative">
+    //     <div className="card">
+    //         <div className={flipped ? 'flipped' : ''}>
+    //         <img
+    //             src={card.src}
+    //             className="front block border-2 border-white rounded-md"
+    //             alt="card front"
+    //             width={100}
+    //         />
+    //         <img
+    //             src="/cover.png"
+    //             className="back block border-2 border-white rounded-md"
+    //             alt="card back"
+    //             width={100}
+    //             onClick={handleClick}
+    //         />
+    //         </div>
+    //     </div>
+    //     </div>
+    // );
     return (
         <div className="relative">
-        <div className="card">
+          <div className="card md:w-[100px] lg:w-[120px]">
             <div className={flipped ? 'flipped' : ''}>
-            <img
+              <img
                 src={card.src}
-                className="front block border-2 border-white rounded-md"
+                className="front block border-2 border-white rounded-md w-full"
                 alt="card front"
-                width={100}
-            />
-            <img
+              />
+              <img
                 src="/cover.png"
-                className="back block border-2 border-white rounded-md"
+                className="back block border-2 border-white rounded-md w-full"
                 alt="card back"
-                width={100}
                 onClick={handleClick}
-            />
+              />
             </div>
-        </div>
+          </div>
         </div>
     );
+      
 };
 
 export default SingleCard;
