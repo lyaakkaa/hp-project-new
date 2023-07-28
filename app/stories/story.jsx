@@ -48,20 +48,23 @@ const Story = ({ number, title, link, text, id }) => {
       }}
     >
       <div
-        className={`flex flex-col md:flex-row items-center p-2 rounded-lg my-6 ${isDeleting ? 'slide-out' : ''}`}
+        className={`flex flex-col md:flex-row items-center p-5 rounded-lg my-6 border-[1px] m-4  ${isDeleting ? 'slide-out' : ''}`}
         onAnimationEnd={handleAnimationEnd}
       >
         <div className="md:w-24 md:h-24 w-16 h-16 overflow-hidden">
           <img
             src={number % 2 === 0 ? '/group.jpg' : '/poster.jpg'}
             alt={title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-[15px]"
           />
         </div>
 
         <div className="flex flex-col md:flex-row flex-grow md:ml-4 mt-4 md:mt-0">
-          <div className="text-lg md:text-xl font-semibold text-white">{title}</div>
-          <div className="text-sm mt-2 md:mt-0 md:ml-4 text-gray-400">{text}</div>
+          <div className="text-lg md:text-xl font-semibold text-white">
+            {title}
+            <br></br> 
+            <span className="text-sm mt-2 md:mt-0 text-gray-400">{text}</span>
+          </div>
         </div>
 
         <button
