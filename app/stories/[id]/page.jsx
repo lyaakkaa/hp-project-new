@@ -56,7 +56,7 @@ const Story = () => {
         const story = await fetchStory(id);
         setStoryInfo(
           <div className="bg-[#D2B48C] absolute inset-0 flex justify-center items-start">
-            <div className="bg-[#D2B48C] fixed w-full h-full flex flex-col justify-start items-start p-8 overflow-auto">
+            <div className="bg-[#D2B48C] fixed w-full h-full flex flex-col justify-start items-start p-8 mt-8 overflow-auto">
               <h1 className="text-4xl mb-4 text-center mx-auto"> {removeNumbersAndParentheses(story.story.title) || `Story`}</h1>
               <p className='text-bold'>{removeNumbersAndParentheses(story.story.content)}</p>
               <button onClick={createAudio}>▶ Play</button>
