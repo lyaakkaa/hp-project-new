@@ -84,8 +84,10 @@ const SignInModal = ({
       e.preventDefault();
       try {
         const res = await registerUser({ "email": userName, "password": password });
+        window.alert('Registered successfully!')
         console.log('Registered successfully!');
       } catch (error) {
+        window.alert('An error occurred:', error);
         console.log('An error occurred:', error);
       }
 
