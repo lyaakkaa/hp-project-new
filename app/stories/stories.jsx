@@ -52,7 +52,13 @@ const Stories = () => {
           />
         ))
       ) : (
-        <p>No stories</p>
+        <>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <img src='/pusheen-harry-potter.gif' alt="Centered GIF" width={150}/>
+            <p className='text-white text-center'>No stories</p>
+          </div>
+        </>
+        
       )}
     </div>
   );
