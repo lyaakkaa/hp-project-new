@@ -69,11 +69,14 @@ const SignInModal = ({
 
         if (token) {
           console.log('Logged in successfully!');
+          window.alert('Login successful!');
           window.location.reload();
         } else {
+          window.alert('Login failed');
           console.log('Login failed.');
         }
       } catch (error) {
+        window.alert('An error occurred');
         console.log('An error occurred:', error);
       }
     } else {
