@@ -243,7 +243,7 @@ export default function Chat() {
   }, [error])
 
   return (
-    <div className="flex flex-col flex-1 w-full border-zinc-100 bg-white overflow-hidden y-full">
+    <div className="flex flex-col flex-1 w-full border-zinc-100 bg-white overflow-hidden h-[1/2]">
       <div
         ref={chatContainerRef}
         className="flex-1 w-full relative max-h-[calc(100vh-4rem)] overflow-x-hidden overflow-y-scroll "
@@ -256,7 +256,7 @@ export default function Chat() {
         {loading && <LoadingChatLine />}
 
         <div
-          className="h-[54vh] bg-white"
+          className="h-[20vh] bg-white"
           ref={messagesEndRef}
         />
       </div>

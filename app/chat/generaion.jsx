@@ -40,6 +40,7 @@ function removeNumbersAndParentheses(text) {
 
 const StoryGenPage = () => {
   const [storyInfo, setStoryInfo] = useState(null);
+  const [isPhone, setIsPhone] = useState(false);
 
 
   useEffect(() => {
@@ -59,34 +60,71 @@ const StoryGenPage = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  return (
-    <div className="flex flex-column w-full h-[90vh]">
-      <div className="flex inset-y-0 left-0 basis-1/2 border-r border-gray-300">
-        <Chat />
-      </div>
-      <div className="flex inset-y-0 right-0 basis-1/2 bg-white overflow-auto">
-        {storyInfo && (
-          <StreamText content={removeNumbersAndParentheses(storyInfo)} />
-        )}
-      </div>
-    </div>
-  );
+  // check for smaller screens
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)'); // Adjust the max-width to the desired breakpoint for phones
+    setIsPhone(mediaQuery.matches);
+
+    const handleResize = (event) => {
+      setIsPhone(event.matches);
+    };
+
+    mediaQuery.addListener(handleResize);
+    return () => mediaQuery.removeListener(handleResize);
+  }, []);
+
   // return (
-  //   <div className="flex flex-col w-full h-[90vh]">
-  //     <div className="flex-1 h-full inset-y-0 right-0 basis-1/2 bg-white overflow-auto">
+  //   <div className="flex flex-column w-full h-[90vh]">
+  //     <div className="flex inset-y-0 left-0 basis-1/2 border-r border-gray-300">
+  //       <Chat />
+  //     </div>
+  //     <div className="flex inset-y-0 right-0 basis-1/2 bg-white overflow-auto">
   //       {storyInfo && (
   //         <StreamText content={removeNumbersAndParentheses(storyInfo)} />
   //       )}
   //     </div>
-  //     <div className="flex-1 h-full inset-y-0 left-0 basis-1/2 border-r border-gray-300">
-  //       <Chat />
+  //   </div>
+  // );
+
+  // return (
+  //   <div className="flex flex-col h-screen">
+  //     <div className='overflow-auto h-1/2 mt-20'><Chat /></div>
+  //     <div className='overflow-auto h-1/2 bg-white'>
+  //       {storyInfo && (
+  //         <StreamText content={removeNumbersAndParentheses(storyInfo)} />
+  //       )}
   //     </div>
   //   </div>
   // );
-  
-  
-  
-  
+
+  return (
+    <>
+    {!isPhone ? (
+      <div className="flex flex-column w-full h-[90vh]">
+        <div className="flex inset-y-0 left-0 basis-1/2 border-r border-gray-300">
+          <Chat />
+        </div>
+        <div className="flex inset-y-0 right-0 basis-1/2 bg-white overflow-auto">
+          {storyInfo && (
+            <StreamText content={removeNumbersAndParentheses(storyInfo)} />
+          )}
+        </div>
+      </div>
+    ) : (
+      <>
+      <div className="flex flex-col h-screen">
+        <div className='overflow-auto h-1/2 mt-16'><Chat /></div>
+          <div className='overflow-auto h-1/2 bg-white mt-0'>
+            {storyInfo && (
+              <StreamText content={removeNumbersAndParentheses(storyInfo)} />
+            )}
+        </div>
+      </div>
+          
+      </>
+    )}
+    </>
+  );
 };
 
 const StreamText = ({ content }) => {
