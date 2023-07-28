@@ -39,20 +39,24 @@ const Stories = () => {
 
   return (
     <div className={`${styles.paddings} bg-primary-black absolute inset-0 overflow-x-hidden`}>
+      {stories && stories.length > 0 ? (
 
-        {stories && stories.map((story, index) => (
+        stories.map((story, index) => (
           <Story
             key={index}
-            number={index+1}
+            number={index + 1}
             title={removeNumbersAndParentheses(story.title) || `Story ${index + 1}`}
             link={`/stories/${story._id}`}
             text={story.content.substring(0, 50) + '...'}
             id={story._id}
           />
-        ))}
-
+        ))
+      ) : (
+        <p>No stories</p>
+      )}
     </div>
   );
+  
 };
 
 export default Stories;
