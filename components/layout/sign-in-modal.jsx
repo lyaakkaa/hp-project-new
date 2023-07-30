@@ -1,22 +1,17 @@
 import { Dialog, Transition } from '@headlessui/react';
 import axios from "axios";
 import Image from "next/image";
-import {
-  Fragment,
-  useCallback,
-  useMemo,
-  useState
-} from "react";
+import { Fragment, useCallback, useMemo, useState } from "react";
 
 const SignInModal = ({
   showSignInModal,
   setShowSignInModal,
 }) => {
-  const [signInClicked, setSignInClicked] = useState(false);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState({});
   const [logged, setLogged] = useState(true);
+  const [registrationMode, setRegistrationMode] = useState(false); // New state variable for registration mode
 
   const loginUser = async (credentials) => {
     try {
@@ -51,18 +46,15 @@ const SignInModal = ({
     }
   };
 
-  const registerBtn = () => {
-    setLogged(false);
-  };
-
-  const loggedInBtn = () => {
-    setLogged(true);
-  }
-
   const handleSubmit = async (e) => {
-    if (logged) {
-      e.preventDefault();
-      try {
+    e.preventDefault();
+    try {
+      if (registrationMode) {
+        const res = await registerUser({ "email": userName, "password": password });
+        window.alert('Registered successfully!');
+        console.log('Registered successfully!');
+        setRegistrationMode(false); // Switch back to login mode after registration
+      } else {
         const token = await loginUser({ "username": userName, "password": password });
         localStorage.setItem("token", token.access_token);
         setToken(token);
@@ -75,25 +67,12 @@ const SignInModal = ({
           window.alert('Login failed');
           console.log('Login failed.');
         }
-      } catch (error) {
-        window.alert('An error occurred');
-        console.log('An error occurred:', error);
       }
-    } else {
-
-      e.preventDefault();
-      try {
-        const res = await registerUser({ "email": userName, "password": password });
-        window.alert('Registered successfully!')
-        console.log('Registered successfully!');
-      } catch (error) {
-        window.alert('An error occurred:', error);
-        console.log('An error occurred:', error);
-      }
-
-    };
+    } catch (error) {
+      window.alert('An error occurred');
+      console.log('An error occurred:', error);
+    }
   };
-  
 
   return (
     <Transition appear show={showSignInModal} as={Fragment}>
@@ -130,10 +109,10 @@ const SignInModal = ({
                     width={20}
                     height={20}
                   />
-                  <h3 className="font-display text-2xl font-bold">Sign In</h3>
+                  <h3 className="font-display text-2xl font-bold">{registrationMode ? "Registration" : "Sign In"}</h3>
                 </div>
 
-                <form onSubmit={(e) => handleSubmit(e)} className="bg-white px-4 py-6 space-y-4">
+                <form onSubmit={handleSubmit} className="bg-white px-4 py-6 space-y-4">
                   <input
                     type="email"
                     value={userName}
@@ -149,20 +128,22 @@ const SignInModal = ({
                     className="w-full p-2 border border-gray-300 rounded-md"
                   />
                   <button
-                    onClick={loggedInBtn}
                     type="submit"
-                    className="w-full py-2 px-4 bg-[#ffd700] text-black rounded-md hover:[#ffd700]"
+                    className="w-full py-2 px-4 bg-[#100950] text-white rounded-md hover:bg-[#201487]"
                   >
-                    Login
+                    {registrationMode ? "Register" : "Login"}
                   </button>
-                  <button
-                    onClick={registerBtn}
-                    className="w-full py-2 px-4 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
-                  >
-                    Register
-                  </button>
+                  <p className="text-center mt-4">
+                    {registrationMode ? "Already have an account? " : "Don't have an account? "}
+                    <span
+                      className="text-blue-600 cursor-pointer"
+                      onClick={() => setRegistrationMode(!registrationMode)} // Toggle registration mode
+                    >
+                      {registrationMode ? "Login" : "Register"}
+                    </span>
+                  </p>
                 </form>
-
+                
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -175,7 +156,7 @@ const SignInModal = ({
 export function useSignInModal() {
   const [showSignInModal, setShowSignInModal] = useState(false);
 
-const SignInModalCallback = useCallback(() => {
+  const SignInModalCallback = useCallback(() => {
     return (
       <SignInModal
         showSignInModal={showSignInModal}
@@ -189,4 +170,3 @@ const SignInModalCallback = useCallback(() => {
     [setShowSignInModal, SignInModalCallback],
   );
 }
-
