@@ -9,7 +9,7 @@ export const LoadingChatLine = () => (
       className="relative m-auto flex p-4 text-base md:max-w-2xl gap-2 md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl"
     >
       <div className="min-w-[30px]">
-        <CommandLineIcon />
+        <img src='/hat3.png' alt='hat' width={50}></img>
       </div>
       <span className="animate-pulse cursor-default mt-1">▍</span>
     </div>
@@ -46,10 +46,10 @@ export function ChatLine({ role = 'assistant', content, isStreaming }) {
         <div className="min-w-[30px]">
           {role === 'assistant'
             ? (
-              <CommandLineIcon />
+              <img src='/hat3.png' alt='hat' width={50}></img>
             )
             : (
-              <UserIcon />
+              <img src='/hp.png' alt='hp' width={50}></img>
             )
           }
         </div>
