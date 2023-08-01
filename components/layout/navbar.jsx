@@ -35,7 +35,7 @@ export default function NavBar({ hasToken }) {
               <UserDropdown hasToken={hasToken} />
             ) : (
               <button
-                className="rounded-full border border-white bg-white p-1.5 px-4 text-sm text-black transition-all hover:bg-black hover:text-white"
+                className="rounded-full border border-white bg-white p-1.5 px-4 text-sm text-black transition-all hover:bg-blue-900 hover:text-white"
                 onClick={() => setShowSignInModal(true)}
               >
                 Sign In
